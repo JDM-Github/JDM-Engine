@@ -9,7 +9,7 @@ setup(
         "PyQt6>=6.6.0"
     ],
     python_requires=">=3.10",
-    url="https://github.com/yourusername/survey_engine",
-    author="Your Name",
-    description="Survey Editor Engine for PyQt6",
+    url="https://github.com/JDM-Github/JDM-Engine",
+    author="JDM",
+    description="JDM Engine using PyQt6",
 )

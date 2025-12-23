@@ -13,3 +13,6 @@ class PosBehavior:
         super().__init__(*args, **kwargs)
         self.x = x
         self.y = y
+
+        self.old_x = x
+        self.old_y = y

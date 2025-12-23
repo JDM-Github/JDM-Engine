@@ -18,7 +18,7 @@ class Button(
     background_click_color: Color  = ObjectProperty( None, Color )
     border_click          : Border = ObjectProperty( None, Border )
 
-    def __init__(self, parent, **kwargs):
+    def __init__(self, parent=None, **kwargs):
         text_click_color      : Color  = kwargs.pop("text_click_color", None)
         background_click_color: Color  = kwargs.pop("background_click_color", Color(Colors.gray["950"]))
         border_click          : Border = kwargs.pop("border_click", None)

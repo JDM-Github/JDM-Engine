@@ -1,4 +1,5 @@
 from typing import List, Union
+from PyQt6.QtGui import QGuiApplication
 
 def rgb_to_hex(rgb: Union[List[int], tuple]) -> str:
 
@@ -12,3 +13,12 @@ def rgb_to_hex(rgb: Union[List[int], tuple]) -> str:
         return "#{:02X}{:02X}{:02X}".format(*rgb)
     else:
         return "#{:02X}{:02X}{:02X}{:02X}".format(*rgb)
+
+def center_window(width: int, height: int):
+    screen = QGuiApplication.primaryScreen()
+    geom = screen.availableGeometry()
+
+    x = geom.x() + (geom.width()  - width)  // 2
+    y = geom.y() + (geom.height() - height) // 2
+
+    return x, y

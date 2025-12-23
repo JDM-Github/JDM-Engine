@@ -1,4 +1,5 @@
 from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtWidgets import QApplication
 
 class Font:
     _registered_fonts = {}
@@ -14,6 +15,11 @@ class Font:
 
     @classmethod
     def register(cls, name: str, path: str):
+        if QApplication.instance() is None:
+            raise RuntimeError(
+                "Font.register() called before QApplication was created"
+            )
+        
         font_id = QFontDatabase.addApplicationFont(path)
         if font_id == -1:
             raise ValueError(f"Failed to load font from {path}")

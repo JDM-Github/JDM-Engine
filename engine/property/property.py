@@ -23,11 +23,13 @@ class Property(ABC):
             if value is None: value = self._is_same_type(value)
         
         value = self._validate(value)
-        if value == old: return
 
         setattr(instance, self.private_name, value)
         callback = getattr(instance, f"on_{self.name}", None)
-        if callback: callback(self, value)
+        if callback: callback(self, value, old)
+    
+    def set_raw(self, instance, value):
+        setattr(instance, self.private_name, value)
 
     @abstractmethod
     def _is_same_type(self, value): ...

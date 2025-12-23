@@ -10,7 +10,10 @@ class Factory:
         "DEFAULT_FONT_NAME": Font.SYSTEM_DEFAULT,
         "DEFAULT_FONT_SIZE": 10,
         "DEFAULT_FONT_WEIGHT": 400,
+
         "DEFAULT_TEXT_PADDING": (0, 0),
+        "DEFAULT_WIDGET_PADDING": (0, 0),
+        "DEFAULT_LAYOUT_PADDING": (0, 0),
     }
 
     @classmethod

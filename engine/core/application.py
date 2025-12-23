@@ -1,22 +1,60 @@
 import sys
-from typing import List
 from PyQt6.QtWidgets import QApplication
-from engine.controllers.base_controller import BaseController
+from PyQt6.QtGui import QGuiApplication
 from engine.controllers.loader import load_controllers
 from engine.ui.window import EngineWindow
 
+def _resolve_window_position(
+    width: int,
+    height: int,
+    x: int | None,
+    y: int | None,
+    anchor_x: str | None,
+    anchor_y: str | None
+):
+    screen = QGuiApplication.primaryScreen()
+    geom = screen.availableGeometry()
+
+    if anchor_x == "center":
+        x = geom.x() + (geom.width() - width) // 2
+    elif anchor_x == "right":
+        x = geom.right() - width
+    elif anchor_x == "left":
+        x = geom.x()
+
+    if anchor_y == "center":
+        y = geom.y() + (geom.height() - height) // 2
+    elif anchor_y == "bottom":
+        y = geom.bottom() - height
+    elif anchor_y == "top":
+        y = geom.y()
+
+    return x or 0, y or 0
+
 def run_app(
         window: EngineWindow,
-        controllers: List[BaseController],
+        controllers,
         title: str = "Application",
         resize_x: bool = True,
         resize_y: bool = True,
-        x: int = 100,
-        y: int = 100,
+
+        x: int | None = None,
+        y: int | None = None,
+        anchor_x: str | None = None,
+        anchor_y: str | None = None,
+
         width: int = 500,
         height: int = 500
     ):
+
     app = QApplication(sys.argv)
+
+    x, y = _resolve_window_position(
+        width, height,
+        x, y,
+        anchor_x, anchor_y
+    )
+
     _window: EngineWindow = window()
     _window._initialize(
         title=title,
@@ -27,9 +65,8 @@ def run_app(
         width=width,
         height=height
     )
-    _window.render_everything()
+    _window.run_window()
     _window._EngineWindowImpl__set_all_controllers(
-        load_controllers(_window, controllers))
-
-    _window.show()
+        load_controllers(_window, controllers)
+    )
     sys.exit(app.exec())

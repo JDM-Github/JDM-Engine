@@ -7,7 +7,7 @@ from engine.core.constant import TextHAlignment, TextVAlignment
 from engine.ui.styles.border import Border
 from engine.ui.styles.color import Color
 from engine.ui.styles.colors import Colors
-from engine.ui.styles.font import Font
+from engine.ui.styles import Font
 
 from engine.property import *
 from engine.widgets.text import Text

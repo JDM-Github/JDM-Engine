@@ -1,38 +1,32 @@
 from .base import BaseLayout
+from engine.behavior import ScrollBehavior
 
-class StackLayout(BaseLayout):
-    HORIZONTAL = "horizontal"
-    VERTICAL = "vertical"
+class StackLayout(
+    ScrollBehavior,
+    BaseLayout
+):
 
-    def __init__(self, parent=None, orientation=HORIZONTAL, **kwargs):
+    def __init__(self, parent=None, orientation="vertical", **kwargs):
         super().__init__(parent, **kwargs)
+
+        if orientation not in ("horizontal", "vertical"):
+            raise ValueError("orientation must be 'horizontal' or 'vertical'")
+
         self.orientation = orientation
 
     def _reflow(self):
         rect = self._content_rect()
+        if not self.widgets:
+            return
 
-        x, y = rect.left(), rect.top()
-        line_max = 0
+        x = rect.left() - self.scroll_start_x
+        y = rect.top() - self.scroll_start_y
 
-        for w in self._items:
-            hint = w.sizeHint()
+        for w in self.widgets:
+            w.x = int(x)
+            w.y = int(y)
 
-            if self.orientation == self.HORIZONTAL:
-                if x + hint.width() > rect.right():
-                    x = rect.left()
-                    y += line_max + self.spacing
-                    line_max = 0
-
-                w.setGeometry(x, y, hint.width(), hint.height())
-                x += hint.width() + self.spacing
-                line_max = max(line_max, hint.height())
-
+            if self.orientation == "horizontal":
+                x += w.width + self.spacing
             else:
-                if y + hint.height() > rect.bottom():
-                    y = rect.top()
-                    x += line_max + self.spacing
-                    line_max = 0
-
-                w.setGeometry(x, y, hint.width(), hint.height())
-                y += hint.height() + self.spacing
-                line_max = max(line_max, hint.width())
+                y += w.height + self.spacing

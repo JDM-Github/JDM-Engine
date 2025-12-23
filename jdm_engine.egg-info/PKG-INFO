@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: jdm_engine
+Version: 0.1.0
+Summary: JDM Engine using PyQt6
+Home-page: https://github.com/JDM-Github/JDM-Engine
+Author: JDM
+Requires-Python: >=3.10
+Requires-Dist: PyQt6>=6.6.0

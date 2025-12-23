@@ -17,6 +17,10 @@ class ListProperty(Property):
             raise TypeError(f"{self.name} must be a list")
         if self.item_type:
             for i, item in enumerate(value):
-                if not isinstance(item, self.item_type):
+                if self.item_type is float:
+                    if not isinstance(item, float) and not isinstance(item, int):
+                        raise TypeError(f"{self.name}[{i}] must be {self.item_type.__name__}")
+
+                elif not isinstance(item, self.item_type):
                     raise TypeError(f"{self.name}[{i}] must be {self.item_type.__name__}")
         return value
